@@ -1,0 +1,25 @@
+#!/usr/bin/env python3
+
+import sys
+
+USAGE="""
+usage: untag [-h|--help]
+
+    Read a file from stdin, strip it of unested tags
+    of the form "< ... >", and cat the result to stdout.
+"""
+
+
+if __name__=='__main__':
+    if len(sys.argv) > 1:
+        print(USAGE)
+        exit()
+    data = sys.stdin.read()
+    while '<' in data:
+        ii = data.find('<')
+        jj = data.find('>', ii)
+        if not (jj > ii):
+            raise AssertionError('BadInput')
+        sys.stdout.write(data[:ii])
+        data = data[jj+1:]
+    sys.stdout.write(data)

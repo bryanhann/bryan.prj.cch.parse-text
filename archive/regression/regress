@@ -1,0 +1,21 @@
+
+main () {
+    NAME=$1
+    SRC=${SRCD}/${NAME}.html
+    NEW=${DSTD}/${NAME}.new
+    OLD=${DSTD}/${NAME}.old
+
+    [ -f $NEW ] && rm $NEW
+    process $SRC  > $NEW
+    [ -f $OLD ] || {
+        echo creating $OLD
+        cp $NEW $OLD
+    }
+    cmp $NEW $OLD && {
+        echo [pass] regression test on $SRC
+    } || {
+        echo [fail] regression test on $SRC
+    }
+}
+
+main $1

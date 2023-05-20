@@ -1,0 +1,33 @@
+[ "$0" == "./runtests" ] || {
+    echo test must be run my typing './runtests'
+    exit
+}
+
+export SRCD=$PWD/input
+export DSTD=$PWD/output
+#export PATH=$PATH:$PWD/../bin
+[ -d $DSTD ] || mkdir $DSTD
+
+
+_main () {
+    NAME=$1
+    SRC=${SRCD}/${NAME}.html
+    NEW=${DSTD}/${NAME}.new
+    OLD=${DSTD}/${NAME}.old
+
+    rm $NEW
+    process $SRC  > $NEW
+    [ -f $OLD ] || {
+        echo creating $OLD
+        cp $NEW $OLD
+    }
+    cmp $NEW $OLD && {
+        echo [pass] regression test on $SRC
+    } || {
+        echo [fail] regression test on $SRC
+
+    }
+}
+
+./regress short-sample
+./regress long-sample

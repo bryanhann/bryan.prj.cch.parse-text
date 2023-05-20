@@ -1,0 +1,13 @@
+JKJjjHJH   
+SRC=/Users/bch/Downloads/SRC
+DST=~/DST
+mkdir $DST
+for fname in $(ls $SRC); do
+    src=$SRC/${fname}
+    out=$DST/${fname}
+    dst=${out}.clean
+    echo $dst
+    [ -f $dst ] || {
+        ./process $src > $out && mv $out $dst
+    }
+done

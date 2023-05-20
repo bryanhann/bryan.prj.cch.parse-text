@@ -1,0 +1,9 @@
+_main () {
+    echo THIS is [$THIS]
+    [ "$THIS" == "" ] || echo already initialized
+    [ "$THIS" == "" ] || return
+    export THIS=$(poetry env info -p)/../.this/this || return
+    poetry shell
+    export THIS=
+}
+_main

@@ -1,0 +1,5 @@
+[ -f "$1" ] || {
+    echo not found
+    exit
+}
+inscript.py -e big5 $1 | untag
